@@ -1,15 +1,1 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Audio Autoplay</title>
-</head>
-<body>
 
-    <audio controls autoplay muted>
-        <source src="lagu.mp3" type="audio/mpeg">
-        Browser Anda tidak mendukung elemen audio.
-    </audio>
-
-</body>
-</html>

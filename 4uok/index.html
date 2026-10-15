@@ -7,7 +7,7 @@
 <title>Sweet Seventeen - Salsabila 🎀</title>
 
 <style>
-@import url('https://googleapis.com');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600;700&display=swap');
 
 * { box-sizing: border-box; }
 
@@ -172,6 +172,17 @@ button:hover {
   to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
 }
 
+.music-control {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 20;
+  padding: 11px 17px;
+  border: 2px solid white;
+  background: linear-gradient(135deg,#f58bbd,#e75b9e);
+  box-shadow: 0 5px 16px #e75b9e45;
+}
+
 @media (max-width: 400px) {
   .card { padding: 25px 17px; }
   .panda, .panda-hug { font-size: 85px; }
@@ -181,6 +192,14 @@ button:hover {
 
 <body>
 
+<!-- Musik ulang tahun: simpan musik.m4a di folder yang sama dengan file HTML -->
+<audio id="birthdayMusic" loop preload="auto">
+  <source src="musik.m4a" type="audio/mp4">
+</audio>
+<button class="music-control" id="musicButton" onclick="toggleMusic()" aria-label="Putar atau jeda musik">
+  🎵 Play Music
+</button>
+
 <!-- SLIDE 1 -->
 <section class="screen active" id="slide1">
   <div class="card">
@@ -189,8 +208,7 @@ button:hover {
     <h1>I have special gift for you</h1>
     <p>A little surprise for someone very special ✨</p>
     <p class="small">psst... don't tell anyone 🤫💗</p>
-    <!-- Memicu fungsi mulaiMusik() saat tombol diklik -->
-    <button onclick="goTo(2); mulaiMusik(4uok/Nadhif Basalamah - kota ini tak sama tanpamu (Official Lyric Video).mp3);">Click Here 💌</button>
+    <button onclick="startMusicAndGo()">Click Here 💌</button>
   </div>
 </section>
 
@@ -261,16 +279,37 @@ button:hover {
 </section>
 
 <script>
-// --- BAGIAN INTEGRASI AUDIO (NAMA PANJANG) ---
-const audioBday = new Audio('Nadhif Basalamah - kota ini tak sama tanpamu (Official Lyric Video).mp3');
-audioBday.loop = true; // Agar lagu otomatis mengulang ketika selesai
+const birthdayMusic = document.getElementById('birthdayMusic');
+const musicButton = document.getElementById('musicButton');
 
-function mulaiMusik() {
-  audioBday.play().catch(error => {
-    console.log("Musik tertahan kebijakan browser:", error);
-  });
+async function startMusicAndGo() {
+  try {
+    await birthdayMusic.play();
+    musicButton.textContent = '🎵 Pause Music';
+  } catch (error) {
+    musicButton.textContent = '🎵 Tap to Play';
+  }
+  goTo(2);
 }
-// ----------------------------------------------
+
+async function toggleMusic() {
+  if (birthdayMusic.paused) {
+    try {
+      await birthdayMusic.play();
+      musicButton.textContent = '🎵 Pause Music';
+    } catch (error) {
+      musicButton.textContent = '🎵 Tap to Play';
+    }
+  } else {
+    birthdayMusic.pause();
+    musicButton.textContent = '🎵 Play Music';
+  }
+}
+
+birthdayMusic.addEventListener('ended', () => {
+  // Loop juga diatur pada elemen audio, jadi musik otomatis diulang.
+  musicButton.textContent = '🎵 Pause Music';
+});
 
 function goTo(number) {
   document.querySelectorAll('.screen').forEach(screen => {

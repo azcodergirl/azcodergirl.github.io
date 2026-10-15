@@ -7,7 +7,7 @@
 <title>Sweet Seventeen - Salsabila 🎀</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://googleapis.com');
 
 * { box-sizing: border-box; }
 
@@ -189,7 +189,8 @@ button:hover {
     <h1>I have special gift for you</h1>
     <p>A little surprise for someone very special ✨</p>
     <p class="small">psst... don't tell anyone 🤫💗</p>
-    <button onclick="goTo(2)">Click Here 💌</button>
+    <!-- Memicu fungsi mulaiMusik() saat tombol diklik -->
+    <button onclick="goTo(2); mulaiMusik();">Click Here 💌</button>
   </div>
 </section>
 
@@ -260,6 +261,17 @@ button:hover {
 </section>
 
 <script>
+// --- BAGIAN INTEGRASI AUDIO (NAMA PANJANG) ---
+const audioBday = new Audio('Nadhif Basalamah - kota ini tak sama tanpamu (Official Lyric Video).mp3');
+audioBday.loop = true; // Agar lagu otomatis mengulang ketika selesai
+
+function mulaiMusik() {
+  audioBday.play().catch(error => {
+    console.log("Musik tertahan kebijakan browser:", error);
+  });
+}
+// ----------------------------------------------
+
 function goTo(number) {
   document.querySelectorAll('.screen').forEach(screen => {
     screen.classList.remove('active');
